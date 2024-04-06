@@ -13,5 +13,6 @@ export const calculatedCurrentTime = () => {
 export enum Messages{
     START = "startListener",
     GETPOPUPSTATE = "getPopupState",
-    SETPOPUPSTATE = "setPopupState"
+    SETPOPUPSTATE = "setPopupState",
+    GETTIME = "GetTime"
 }

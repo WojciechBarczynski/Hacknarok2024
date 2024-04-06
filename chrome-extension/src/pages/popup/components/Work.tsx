@@ -1,15 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Messages } from '../../background/helpers';
 
 const Work = ({
+  // eslint-disable-next-line react/prop-types
   onSend
 }) => {
-  const [percentage, setPercentage] = useState(30)
+  const [percentage, setPercentage] = useState(0)
+  const [time, setTime] = useState({seconds: 0, minutes: 0, hours: 0})
+
+  const handleTime = useCallback((res) => {
+    if (res.state === "done"){
+      onSend()
+    }
+    else{
+      setPercentage(res.percentage)
+      setTime({seconds: res.seconds, minutes: res.minutes, hours: res.hours})
+    }
+  }, [onSend])
+
+  useEffect(() => {
+    chrome.runtime.sendMessage({command: Messages.GETTIME})
+      .then(handleTime)
+
+    const interval = setInterval(() => {
+      chrome.runtime.sendMessage({command: Messages.GETTIME})
+      .then(handleTime)
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [handleTime])
 
   return (
     <>
       <span><b>Focus</b>App</span>
       <div>
-        Time left: <b>2h 5m</b><br />
+        Time left: <b>{`${time.hours}h ${time.minutes}m ${time.seconds}s`}</b><br />
       </div>
 
       <div className="progress-bar-labels">

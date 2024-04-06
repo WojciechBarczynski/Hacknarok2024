@@ -12,6 +12,9 @@ reloadOnUpdate('pages/content/style.scss');
 let LAST_TABS = []
 let POPUP_STATE: "form" | "work" = "form"
 
+let sessionStartDate = null;
+let sessionEndDate = null;
+
 const onActivatedHandler = (activeInfo) => {
     chrome.tabs.get(activeInfo.tabId, function(tab) {
 
@@ -56,6 +59,12 @@ chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
             LAST_TABS = tabs.map(tab => tab.url)
         })
 
+        const now = new Date()
+        now.setTime(now.getTime() + request.time*1000)
+
+        sessionStartDate = new Date()
+        sessionEndDate = now
+
         chrome.tabs.onUpdated.addListener(onUpdatedHandler);
         chrome.tabs.onActivated.addListener(onActivatedHandler);
         chrome.tabs.onRemoved.addListener(onRemoveHandler);
@@ -75,6 +84,29 @@ chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
     if (request.command === Messages.SETPOPUPSTATE){
         POPUP_STATE = request.state
     }
+
+    if (request.command === Messages.GETTIME){
+        const interval = sessionEndDate.getTime() - sessionStartDate.getTime()
+        const curTime = new Date()
+        const remaining = sessionEndDate.getTime() - curTime.getTime()
+        const elapsed = curTime.getTime() - sessionStartDate.getTime()
+
+        if (remaining < 0){ 
+            POPUP_STATE = "form"
+            return _sendResponse({state: "done"})
+        }
+
+        const percentage = Math.floor((elapsed/interval)*100)
+
+        const remainingMinutes = Math.floor(remaining/60000)
+        const remainingSeconds = Math.floor(remaining/1000)
+
+        const seconds = remainingSeconds%60
+        const minutes = remainingMinutes%60
+        const hours = Math.floor(remainingMinutes/60)
+
+        return _sendResponse({state: "ongoing", percentage, seconds, minutes, hours})
+    }
 })
 
 const sendInformation =  (url: string, operation: OperationType) => {
@@ -83,7 +115,7 @@ const sendInformation =  (url: string, operation: OperationType) => {
     }
 
     const body = {
-        username: "johnny",
+        username: "wojtek",
         time: calculatedCurrentTime(),
         address: url,
         operation: operation
