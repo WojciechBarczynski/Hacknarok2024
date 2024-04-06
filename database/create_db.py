@@ -12,17 +12,17 @@ if __name__ == '__main__':
     conn = psycopg2.connect(dbname=dbname, user=user, password=password, host=host)
 
     cursor = conn.cursor()
-    cursor.execute("DROP TABLE IF EXISTS users")
-    cursor.execute("DROP TABLE IF EXISTS friends")
-    cursor.execute("DROP TABLE IF EXISTS records")
-    cursor.execute("DROP TABLE IF EXISTS scores")
+    cursor.execute("DROP TABLE IF EXISTS users CASCADE")
+    cursor.execute("DROP TABLE IF EXISTS friends CASCADE")
+    cursor.execute("DROP TABLE IF EXISTS records CASCADE")
+    cursor.execute("DROP TABLE IF EXISTS scores CASCADE")
     conn.commit()
 
     cursor = conn.cursor()
     cursor.execute("""
     CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username TEXT)
+    username TEXT);
     """)
     conn.commit()
 
@@ -30,17 +30,7 @@ if __name__ == '__main__':
     cursor.execute("""
     CREATE TABLE friends (
         user_id1 INTEGER NOT NULL,
-        user_id2 INTEGER NOT NULL,
-        PRIMARY KEY (
-            user_id1,
-            user_id2
-        ),
-        CONSTRAINT fk_user1 FOREIGN KEY (user_id1) 
-            REFERENCES uzytkownicy (id)
-            ON DELETE CASCADE,
-        CONSTRAINT fk_user2 FOREIGN KEY (user_id2) 
-            REFERENCES uzytkownicy (id)
-            ON DELETE CASCADE,
+        user_id2 INTEGER NOT NULL
     );
     """
     )

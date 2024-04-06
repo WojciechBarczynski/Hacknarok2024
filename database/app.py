@@ -38,6 +38,19 @@ def get_friends():
     return jsonify({"message": "Friends retrieved successfully.", "friends": friends})
 
 
+@app.route('/api/communication/get_user_friends', methods=['GET'])
+def get_user_friends():
+    user_id = request.args.get('user_id')
+
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT * FROM friends WHERE user_id1 = {user_id} ORDER BY RANDOM() LIMIT 10")
+    friends = cursor.fetchall()
+    cursor.close()
+
+    logging.debug(f"Friends of user {user_id} retrieved successfully.")
+    return jsonify({"message": f"Friends of user {user_id} retrieved successfully.", "friends": friends})
+
+
 @app.route('/api/communication/create_user', methods=['POST'])
 def create_user():
     data = request.json
@@ -71,7 +84,7 @@ def create_record():
     return jsonify({"message": "Record added successfully."})
 
 
-@app.route('/api/communication/create_friend', methods=['POST'])
+@app.route('/api/communication/create_friendship', methods=['POST'])
 def create_friendship():
     data = request.json
     user_id1 = data['user_id1']
@@ -85,24 +98,6 @@ def create_friendship():
     logging.info(f"Friendship {user_id1} {user_id2} added successfully.")
 
     return jsonify({"message": "Friendship added successfully."})
-
-
-@app.route('/api/communication/get_user_friends', methods=['GET'])
-def get_user_friends():
-    user_id = request.args.get('user_id')
-
-    cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM friends WHERE user_id1 = {user_id} ORDER BY RANDOM() LIMIT 10")
-    friends = cursor.fetchall()
-    cursor.close()
-
-    logging.debug(f"Friends of user {user_id} retrieved successfully.")
-    return jsonify({"message": f"Friends of user {user_id} retrieved successfully.", "friends": friends})
-
-
-@app.route('/api/communication/get_user_score', methods=['GET'])
-def get_user_score():
-    ...
 
 
 if __name__ == '__main__':
