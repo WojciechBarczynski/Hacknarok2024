@@ -12,7 +12,7 @@ const Form = ({
   })();
 
   const [startTime, setStartTime] = useState(currentTime)
-  const [endTime, setEndTime] = useState()
+  const [endTime, setEndTime] = useState(undefined)
 
   return (
     <>
