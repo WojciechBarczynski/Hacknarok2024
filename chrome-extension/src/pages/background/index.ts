@@ -16,7 +16,7 @@ let sessionStartDate = null;
 let sessionEndDate = null;
 
 const onActivatedHandler = (activeInfo) => {
-    chrome.tabs.get(activeInfo.tabId, function(tab) {
+    chrome.tabs.get(activeInfo.tabId, function (tab) {
 
         chrome.tabs.query({}, (tabs) => {
             LAST_TABS = tabs.map(tab => tab.url)
@@ -60,7 +60,7 @@ chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
         })
 
         const now = new Date()
-        now.setTime(now.getTime() + request.time*1000)
+        now.setTime(now.getTime() + request.time * 1000)
 
         sessionStartDate = new Date()
         sessionEndDate = now
@@ -77,38 +77,38 @@ chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
         }, 60000)
     }
 
-    if (request.command === Messages.GETPOPUPSTATE){
+    if (request.command === Messages.GETPOPUPSTATE) {
         _sendResponse(POPUP_STATE);
     }
 
-    if (request.command === Messages.SETPOPUPSTATE){
+    if (request.command === Messages.SETPOPUPSTATE) {
         POPUP_STATE = request.state
     }
 
-    if (request.command === Messages.GETTIME){
+    if (request.command === Messages.GETTIME) {
         const interval = sessionEndDate.getTime() - sessionStartDate.getTime()
         const curTime = new Date()
         const remaining = sessionEndDate.getTime() - curTime.getTime()
         const elapsed = curTime.getTime() - sessionStartDate.getTime()
 
-        if (remaining < 0){ 
+        if (remaining < 0) {
             POPUP_STATE = "form"
-            return _sendResponse({state: "done"})
+            return _sendResponse({ state: "done" })
         }
 
-        const percentage = Math.floor((elapsed/interval)*100)
+        const percentage = Math.floor((elapsed / interval) * 100)
 
-        const remainingMinutes = Math.floor(remaining/60000)
-        const remainingSeconds = Math.floor(remaining/1000)
+        const remainingMinutes = Math.floor(remaining / 60000)
+        const remainingSeconds = Math.floor(remaining / 1000)
 
-        const seconds = remainingSeconds%60
-        const minutes = remainingMinutes%60
-        const hours = Math.floor(remainingMinutes/60)
+        const seconds = remainingSeconds % 60
+        const minutes = remainingMinutes % 60
+        const hours = Math.floor(remainingMinutes / 60)
 
-        return _sendResponse({state: "ongoing", percentage, seconds, minutes, hours})
+        return _sendResponse({ state: "ongoing", percentage, seconds, minutes, hours })
     }
 
-    if (request.command === Messages.GETSTARTANDEND){
+    if (request.command === Messages.GETSTARTANDEND) {
         const startHours = sessionStartDate.getHours()
         const startMinutes = sessionStartDate.getMinutes()
         const endHours = sessionEndDate.getHours()
@@ -116,13 +116,13 @@ chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
 
         const startDate = `${startHours < 10 ? '0' : ''}${startHours}:${startMinutes < 10 ? '0' : ''}${startMinutes}`
         const endDate = `${endHours < 10 ? '0' : ''}${endHours}:${endMinutes < 10 ? '0' : ''}${endMinutes}`
-        
-        return _sendResponse({start: startDate, end: endDate})
+
+        return _sendResponse({ start: startDate, end: endDate })
     }
 })
 
-const sendInformation =  (url: string, operation: OperationType) => {
-    if (url === "chrome://newtab/" || url === ""){
+const sendInformation = (url: string, operation: OperationType) => {
+    if (url === "chrome://newtab/" || url === "") {
         return
     }
 
@@ -133,7 +133,7 @@ const sendInformation =  (url: string, operation: OperationType) => {
         operation: operation
     }
 
-    fetch("http://54.210.118.222:80/api/communication/create_record", {
+    fetch("http://52.87.252.127:80/api/communication/create_record", {
         method: "POST",
         headers: {
             "content-type": "application/json"
