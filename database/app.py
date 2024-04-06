@@ -5,15 +5,28 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+dbname = 'db'
+user = 'admin'
+password = 'admin'
+host = 'localhost'
+
+conn = psycopg2.connect(dbname=dbname, user=user, password=password, host=host)
+
+
 @app.route('/api/communication/get_users', methods=['GET'])
 def get_users():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM users")
     users = cursor.fetchall()
+
+    output = {}
+
+    for user in users:
+        output[user[0]] = user[1]
     cursor.close()
 
-    logging.debug("Users retrieved successfully.")
-    return jsonify({"message": "Users retrieved successfully.", "users": users})
+    logging.info("Users retrieved successfully.")
+    return jsonify({"message": "Users retrieved successfully.", "users": output})
 
 
 @app.route('/api/communication/get_records', methods=['GET'])
@@ -102,11 +115,6 @@ def create_friendship():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='[%(asctime)s - %(levelname)s] - %(message)s')
-
-    dbname = 'db'
-    user = 'admin'
-    password = 'admin'
-    host = 'localhost'
 
     try:
         conn = psycopg2.connect(dbname=dbname, user=user, password=password, host=host)
