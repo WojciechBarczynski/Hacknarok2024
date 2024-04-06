@@ -1,4 +1,4 @@
-import psycopg2
+import sqlite3
 import logging
 
 if __name__ == '__main__':
@@ -11,7 +11,7 @@ if __name__ == '__main__':
 
     
 
-    conn = psycopg2.connect(
+    conn = sqlite3.connect(
         dbname=dbname,
         user=user,
         password=password,

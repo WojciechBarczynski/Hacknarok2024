@@ -25,7 +25,7 @@ const onActivatedHandler = (activeInfo) => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const onUpdatedHandler = (tabId, changeInfo, tab) => {
-    if (changeInfo.url){
+    if (changeInfo.url) {
         chrome.tabs.query({}, (tabs) => {
             LAST_TABS = tabs.map(tab => tab.url)
         })
@@ -40,7 +40,7 @@ const onRemoveHandler = () => {
         const curTabsUrls = tabs.map(tab => tab.url)
 
         LAST_TABS.forEach(tab => {
-            if (!(curTabsUrls.includes(tab))){
+            if (!(curTabsUrls.includes(tab))) {
                 sendInformation(tab, OperationType.Remove)
             }
         })
@@ -85,26 +85,21 @@ const sendInformation =  (url: string, operation: OperationType) => {
     const body = {
         username: "johnny",
         time: calculatedCurrentTime(),
-        addres: url,
+        address: url,
         operation: operation
     }
-    //"http://127.0.0.1:5000/db/add_record"
-    
-    console.log(`Sending: url = ${url} opeartion = ${operation}`)
 
-    fetch("https://01htspnak6ny62hs5gpyv2ka8300-0fd1b06d962b4163c9eb.requestinspector.com", {
+    fetch("http://54.210.118.222:80/api/communication/create_record", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "content-type": "application/json"
         },
         body: JSON.stringify(body)
     })
-    .then(console.log)
-
-    console.log("dupa")
+        .then(response => console.log(response))
 }
 
-enum OperationType{
+enum OperationType {
     Remove = "Remove",
     TabChange = "TabChange",
     UrlChange = "UrlChange"

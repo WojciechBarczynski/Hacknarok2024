@@ -31,7 +31,9 @@ const Popup = () => {
           setScreen("form")
         }} />}
         <hr />
-        <button>
+        <button onClick={() => {
+          window.open("../newtab/index.html", '_blank', 'noopener');
+        }}>
           <span className="material-symbols-outlined">
             account_circle
           </span> Show Profile
