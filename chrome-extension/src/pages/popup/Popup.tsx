@@ -7,7 +7,7 @@ import Form from './components/Form';
 import Work from './components/Work';
 
 const Popup = () => {
-  const [screen, setScreen] = useState("form")
+  const [screen, setScreen] = useState<string>("form")
 
   return (
     <div

@@ -14,22 +14,13 @@ const Work = ({
 
   const [startTime, setStartTime] = useState(currentTime)
   const [endTime, setEndTime] = useState(undefined)
+  const [endTime, setEndTime] = useState(undefined)
 
   return (
     <>
       <span><b>Focus</b>App</span>
-      <div className="inputWithLabel">
-        <label htmlFor="startTime" className="label">Start Time</label>
-        <input id="startTime" className="timeInput" type="time" required value={startTime} onChange={e => setStartTime(e?.target?.value)} />
-      </div>
-      <div className="inputWithLabel">
-        <label htmlFor="endTime" className="label">End Time</label>
-        <input id="endTime" className="timeInput" type="time" required value={endTime} onChange={e => setEndTime(e?.target?.value)} />
-      </div>
-      <button onClick={() => {
-        chrome.runtime.sendMessage({command: Messages.END})
-        onSend()
-        }}>
+      Progress Bar
+      <button onClick={() => onSend()}>
         Zakończ
       </button>
     </>

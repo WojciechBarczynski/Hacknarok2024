@@ -7,11 +7,12 @@ body {
 
 body {
   margin-bottom: -12px;
+  background: linear-gradient(to bottom right, #4d3b25, #291d1d, #100f0d);
+  /* Viking scheme background */
 }
 
 .App {
-
-  background: linear-gradient(to bottom right, #010622, #162360);
+  background: linear-gradient(to bottom right, #4d3b25, #291d1d, #100f0d);
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 1);
   padding: 10px;
   color: white;
@@ -33,7 +34,8 @@ body {
 
 .timeInput {
   appearance: none;
-  border: 1px solid #ccc;
+  border: 1px solid #4d3b25;
+  /* Viking scheme border color */
   border-radius: 4px;
   padding: 8px;
   font-size: 16px;
@@ -44,8 +46,9 @@ body {
 
 .timeInput:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+  border-color: #734a1e;
+  /* Viking scheme focus color */
+  box-shadow: 0 0 4px rgba(115, 74, 30, 0.5);
 }
 
 label {
@@ -59,8 +62,7 @@ button {
   border-radius: 4px;
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #007bff;
-  background-image: linear-gradient(to bottom right, #2525d0, #2fa3c3);
+  background: linear-gradient(to bottom right, #7fb03b, #4b6922);
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
@@ -71,14 +73,15 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
-  background-image: linear-gradient(to bottom right, #1010aa, #1a829e);
+  background: linear-gradient(to bottom right, #59821f, #38570d);
+  /* Darker green-ish color on hover */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 button:focus {
   outline: none;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+  box-shadow: 0 0 4px rgba(115, 122, 30, 0.5);
+  /* Viking scheme focus color */
 }
 
 .inputWithLabel {
