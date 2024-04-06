@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route('/db/get_users', methods=['GET'])
+@app.route('/api/communication/get_users', methods=['GET'])
 def get_users():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM users")
@@ -16,7 +16,7 @@ def get_users():
     return jsonify({"message": "Users retrieved successfully.", "users": users})
 
 
-@app.route('/db/get_records', methods=['GET'])
+@app.route('/api/communication/get_records', methods=['GET'])
 def get_records():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM records")
@@ -27,7 +27,7 @@ def get_records():
     return jsonify({"message": "Records retrieved successfully.", "records": records})
 
 
-@app.route('/db/get_friends', methods=['GET'])
+@app.route('/api/communication/get_friends', methods=['GET'])
 def get_friends():
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM friends")
@@ -38,7 +38,7 @@ def get_friends():
     return jsonify({"message": "Friends retrieved successfully.", "friends": friends})
 
 
-@app.route('/db/create_user', methods=['POST'])
+@app.route('/api/communication/create_user', methods=['POST'])
 def create_user():
     data = request.json
     username = data['username']
@@ -53,7 +53,7 @@ def create_user():
     return jsonify({"message": "User created successfully."})
 
 
-@app.route('/db/add_record', methods=['POST'])
+@app.route('/api/communication/create_record', methods=['POST'])
 def create_record():
     data = request.json
     username = data['username']
@@ -71,7 +71,7 @@ def create_record():
     return jsonify({"message": "Record added successfully."})
 
 
-@app.route('/db/add_friend', methods=['POST'])
+@app.route('/api/communication/create_friend', methods=['POST'])
 def create_friendship():
     data = request.json
     user_id1 = data['user_id1']
@@ -87,7 +87,7 @@ def create_friendship():
     return jsonify({"message": "Friendship added successfully."})
 
 
-@app.route('/db/get_user_friends', methods=['GET'])
+@app.route('/api/communication/get_user_friends', methods=['GET'])
 def get_user_friends():
     user_id = request.args.get('user_id')
 
@@ -100,7 +100,7 @@ def get_user_friends():
     return jsonify({"message": f"Friends of user {user_id} retrieved successfully.", "friends": friends})
 
 
-@app.route('/db/get_tmp', methods=['GET'])
+@app.route('/api/communication/get_tmp', methods=['GET'])
 def get_tmp():
     ...
 
