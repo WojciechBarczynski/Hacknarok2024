@@ -100,8 +100,8 @@ def get_user_friends():
     return jsonify({"message": f"Friends of user {user_id} retrieved successfully.", "friends": friends})
 
 
-@app.route('/api/communication/get_tmp', methods=['GET'])
-def get_tmp():
+@app.route('/api/communication/get_user_score', methods=['GET'])
+def get_user_score():
     ...
 
 
