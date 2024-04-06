@@ -22,34 +22,7 @@ const Newtab = () => {
   const [percentage, setPercentage] = useState(0)
   const [startAndEnd, SetStartAndEnd] = useState({start: "0:00", end: "0:00"})
 
-  const getRandomProfilePic = () => `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`;
-
-  const handleTime = useCallback((res) => {
-    console.log(res)
-    if (res.state === "done"){
-      return
-    }
-    else{
-      setPercentage(res.percentage)
-    }
-  }, [])
-
-  useEffect(() => {
-    chrome.runtime.sendMessage({command: Messages.GETTIME})
-      .then(handleTime)
-    
-    chrome.runtime.sendMessage({command: Messages.GETSTARTANDEND})
-    .then(res => SetStartAndEnd({start: res.start, end: res.end}))
-
-
-    const interval = setInterval(() => {
-      chrome.runtime.sendMessage({command: Messages.GETTIME})
-      .then(handleTime)
-    }, 1000)
-
-    return () => clearInterval(interval)
-  }, [handleTime])
-
+  const getRandomProfilePic = () => `https://i.postimg.cc/Dz0ngZ9r/berserker-norse-viking-square-canvas-art-canvas-wall-art-2-8-x-8-579559-1200x1200.webp`;
 
   const [profilePic, setProfilePic] = useState(getRandomProfilePic())
 
@@ -76,8 +49,8 @@ const Newtab = () => {
   }
 
   useEffect(() => {
-    generatePeople(10)
-  }, [])
+    generatePeople(10);
+  }, []);
 
   return (
     <div className="App">
@@ -90,10 +63,11 @@ const Newtab = () => {
                 <img src={profilePic} alt="Profile Picture" />
               </div>
               <div className="profile-details">
-                <div>Welcome, <b>Blondyna</b><br /></div>
+                <div>Welcome, <b>Björn Ironside</b><br /></div>
                 <div className="progress-bar-labels">
-                  <div>{startAndEnd.start}</div>
-                  <div>{startAndEnd.end}</div>
+                  <div>14:00</div>
+                  <div>Working progress</div>
+                  <div>16:35</div>
                 </div>
                 <div className="progress-bar-container">
                   <div
@@ -150,6 +124,24 @@ const Newtab = () => {
                   }
                 </tbody>
               </table>
+            </div>
+            <h1>Strike</h1>
+            <div className="chart">
+              <LineChart
+                width={600}
+                height={300}
+                data={randomValues.slice(-30)}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+              >
+                <XAxis dataKey="date" stroke="#e0e0e0" />
+                <YAxis stroke="#e0e0e0" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#414a4c" />
+                <Tooltip wrapperStyle={{ backgroundColor: '#515a63' }}
+                  labelStyle={{ color: '#e0e0e0' }}
+                  itemStyle={{ color: '#e0e0e0' }} />
+                <Legend wrapperStyle={{ color: '#e0e0e0' }} />
+                <Line type="monotone" dataKey="count" stroke="#ff0066" activeDot={{ r: 8, fill: '#ff0066' }} />
+              </LineChart>
             </div>
           </div>
         </div>

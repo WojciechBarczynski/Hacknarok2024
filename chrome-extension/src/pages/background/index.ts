@@ -38,7 +38,6 @@ const onUpdatedHandler = (tabId, changeInfo, tab) => {
 }
 
 const onRemoveHandler = () => {
-
     chrome.tabs.query({}, (tabs) => {
         const curTabsUrls = tabs.map(tab => tab.url)
 

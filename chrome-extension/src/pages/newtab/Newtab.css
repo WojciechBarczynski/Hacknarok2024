@@ -108,7 +108,7 @@ body,
 
 .progress-bar {
     height: 100%;
-    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.9) 10%, rgba(255, 255, 255, 0.7) 10%, rgba(255, 255, 255, 0.7) 20%, rgba(255, 255, 255, 0.9) 20%, rgba(255, 255, 255, 0.9) 30%, rgba(255, 255, 255, 0.7) 30%, rgba(255, 255, 255, 0.7) 40%, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0.9) 60%, rgba(255, 255, 255, 0.9) 70%, rgba(255, 255, 255, 0.7) 70%, rgba(255, 255, 255, 0.7) 80%, rgba(255, 255, 255, 0.9) 80%, rgba(255, 255, 255, 0.9) 90%, rgba(255, 255, 255, 0.7) 90%, rgba(255, 255, 255, 0.7));
+    background-image: linear-gradient(45deg, rgba(0, 255, 0, 0.9) 10%, rgba(0, 255, 0, 0.7) 10%, rgba(0, 255, 0, 0.7) 20%, rgba(0, 255, 0, 0.9) 20%, rgba(0, 255, 0, 0.9) 30%, rgba(0, 255, 0, 0.7) 30%, rgba(0, 255, 0, 0.7) 40%, rgba(0, 255, 0, 0.9) 40%, rgba(0, 255, 0, 0.9) 50%, rgba(0, 255, 0, 0.7) 50%, rgba(0, 255, 0, 0.7) 60%, rgba(0, 255, 0, 0.9) 60%, rgba(0, 255, 0, 0.9) 70%, rgba(0, 255, 0, 0.7) 70%, rgba(0, 255, 0, 0.7) 80%, rgba(0, 255, 0, 0.9) 80%, rgba(0, 255, 0, 0.9) 90%, rgba(0, 255, 0, 0.7) 90%, rgba(0, 255, 0, 0.7));
     background-size: 200% 200%;
     /* Make segments smaller */
     animation: progress-animation 3s linear infinite;
@@ -223,4 +223,15 @@ th {
 
 tr {
     border-bottom: 1px solid white;
+}
+
+.chart {
+    padding: 20px;
+    background-color: #222831;
+    border-radius: 15px;
+}
+
+.recharts-text.recharts-cartesian-axis-tick-value,
+.recharts-legend-item-text {
+    fill: #e0e0e0 !important; 
 }
