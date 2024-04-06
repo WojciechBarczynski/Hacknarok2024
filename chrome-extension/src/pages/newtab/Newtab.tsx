@@ -77,6 +77,23 @@ const Newtab = () => {
           </div>
         </div>
         <div className="data-container">
+          <h1>Point earnings</h1>
+          <div className="heatmap">
+            <CalendarHeatmap
+              startDate={shiftDate(today, -365)}
+              endDate={today}
+              values={randomValues}
+              horizontal={true}
+              gutterSize={0.5}
+              showOutOfRangeDays={false}
+              classForValue={value => {
+                if (!value) {
+                  return 'color-empty';
+                }
+                return `color-${Math.min(value.count, 4)}`;
+              }}
+            />
+          </div>
           <h1>Rankings</h1>
           <div className="rankings">
             <div className="switches">
@@ -105,23 +122,6 @@ const Newtab = () => {
                 </tbody>
               </table>
             </div>
-          </div>
-          <h1>Point earnings</h1>
-          <div className="heatmap">
-            <CalendarHeatmap
-              startDate={shiftDate(today, -365)}
-              endDate={today}
-              values={randomValues}
-              horizontal={true}
-              gutterSize={0.5}
-              showOutOfRangeDays={false}
-              classForValue={value => {
-                if (!value) {
-                  return 'color-empty';
-                }
-                return `color-${Math.min(value.count, 4)}`;
-              }}
-            />
           </div>
         </div>
       </div>
