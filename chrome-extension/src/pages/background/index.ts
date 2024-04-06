@@ -1,5 +1,6 @@
 import reloadOnUpdate from 'virtual:reload-on-update-in-background-script';
 import 'webextension-polyfill';
+import { Messages, calculatedCurrentTime } from './helpers';
 
 reloadOnUpdate('pages/background');
 /**
@@ -8,46 +9,90 @@ reloadOnUpdate('pages/background');
  */
 reloadOnUpdate('pages/content/style.scss');
 
-export enum Messages{
-    START = "startListener",
-    END = "endListener"
-}
+let LAST_TABS = []
 
-let SAVED_LINKS = []
-
-const onActivatedHandler = (activeInfo) => {
+const onActivatedHandler =  (activeInfo) => {
     chrome.tabs.get(activeInfo.tabId, function(tab) {
-        SAVED_LINKS.push(tab.url);
+
+        chrome.tabs.query({}, (tabs) => {
+            LAST_TABS = tabs.map(tab => tab.url)
+        })
+
+        sendInformation(tab.url, OperationType.TabChange)
     });
 }
 
 const onUpdatedHandler = (tabId, changeInfo, tab) => {
     if (changeInfo.url){
-        SAVED_LINKS.push(changeInfo.url)
+        chrome.tabs.query({}, (tabs) => {
+            LAST_TABS = tabs.map(tab => tab.url)
+        })
+
+        sendInformation(changeInfo.url, OperationType.UrlChange)
     }
+}
+
+const onRemoveHandler = () => {
+    chrome.tabs.query({}, (tabs) => {
+        const curTabsUrls = tabs.map(tab => tab.url)
+
+        LAST_TABS.forEach(tab => {
+            if (!(curTabsUrls.includes(tab))){
+                sendInformation(tab, OperationType.Remove)
+            }
+        })
+
+        LAST_TABS = curTabsUrls
+    })
 }
 
 chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
 
-    
-    
     if (request.command === Messages.START) {
-        console.log(request.time);
+        chrome.tabs.query({}, (tabs) => {
+            LAST_TABS = tabs.map(tab => tab.url)
+        })
 
         chrome.tabs.onUpdated.addListener(onUpdatedHandler);
         chrome.tabs.onActivated.addListener(onActivatedHandler);
+        chrome.tabs.onRemoved.addListener(onRemoveHandler);
 
         setTimeout(() => {
             console.log("TIME TO TURN OFF")
             chrome.tabs.onUpdated.removeListener(onUpdatedHandler);
             chrome.tabs.onActivated.removeListener(onActivatedHandler);
-            SAVED_LINKS = []
-        }, request.time*1000)
-    }
-
-    if (request.command === Messages.END){
-        console.log(SAVED_LINKS)
+            chrome.tabs.onRemoved.addListener(onRemoveHandler);
+        }, 60000)
     }
 })
+
+const sendInformation = (url: string, operation: OperationType) => {
+    if (url === "chrome://newtab/" || url === ""){
+        return
+    }
+
+    console.log(`Sending: url = ${url} opeartion = ${operation}`)
+
+    const body = {
+        username: "johnny",
+        time: calculatedCurrentTime(),
+        addres: url,
+        operation: operation
+    }
+
+    // fetch("http://127.0.0.1:5000/db/add_record'", {
+    //     method: "POST",
+    //     headers: {
+    //         "content-type": "application/json"
+    //     },
+    //     body: JSON.stringify(body)
+    // })
+}
+
+enum OperationType{
+    Remove = "Remove",
+    TabChange = "TabChange",
+    UrlChange = "UrlChange"
+}
 
 console.log('background loaded');

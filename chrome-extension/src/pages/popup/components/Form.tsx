@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Messages } from '../../background';
+import { Messages } from '../../background/helpers';
 
 const Form = ({
   onSend
 }) => {
+  
   const currentTime = (() => {
     const now = new Date();
     const hours = now.getHours();
@@ -41,9 +42,11 @@ const Form = ({
         <input id="endTime" className="timeInput" type="time" required value={endTime} onChange={e => setEndTime(e?.target?.value)} />
       </div>
       <button onClick={() => {
-        onSend()
+        
         const time = parseTime();
         chrome.runtime.sendMessage({ command: Messages.START, time: time })
+        onSend()
+
       }}>
         Begin working
       </button>
