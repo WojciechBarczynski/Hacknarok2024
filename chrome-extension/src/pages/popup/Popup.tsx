@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import logo from '@assets/img/logo.svg';
+import React, { useState } from 'react';
 import background from '@assets/img/background.png';
 import '@pages/popup/Popup.css';
 import withSuspense from '@src/shared/hoc/withSuspense';
@@ -25,7 +24,7 @@ const Popup = () => {
         }} />}
         <hr />
         <button>
-          <span class="material-symbols-outlined">
+          <span className="material-symbols-outlined">
             account_circle
           </span> Wyświetl Profil
         </button>

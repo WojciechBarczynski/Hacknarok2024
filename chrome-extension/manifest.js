@@ -15,7 +15,7 @@ const manifest = {
   name: '__MSG_extensionName__',
   version: packageJson.version,
   description: '__MSG_extensionDescription__',
-  permissions: ['storage', 'sidePanel'],
+  permissions: ['storage', 'sidePanel', "tabs", "activeTab"],
   side_panel: {
     default_path: 'src/pages/sidepanel/index.html',
   },
@@ -27,9 +27,6 @@ const manifest = {
   action: {
     default_popup: 'src/pages/popup/index.html',
     default_icon: 'icon-34.png',
-  },
-  chrome_url_overrides: {
-    newtab: 'src/pages/newtab/index.html',
   },
   icons: {
     128: 'icon-128.png',

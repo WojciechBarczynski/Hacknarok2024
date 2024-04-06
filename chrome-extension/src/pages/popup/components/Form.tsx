@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import background from '@assets/img/background.png';
+import { Messages } from '../../background';
 
 const Form = ({
   onSend
@@ -12,7 +12,22 @@ const Form = ({
   })();
 
   const [startTime, setStartTime] = useState(currentTime)
-  const [endTime, setEndTime] = useState()
+  const [endTime, setEndTime] = useState(undefined)
+
+  const parseTime = () => {
+    const tempStartTime = startTime.split(":")
+    const tempEndTime = endTime.split(":")
+
+    let hours = +tempEndTime[0] - (+tempStartTime[0])
+    let minutes = +tempEndTime[1] - (+tempStartTime[1])
+
+    if (minutes < 0){
+      hours -= 1
+      minutes += 60
+    }
+
+    return hours*60*60 + minutes*60
+  }
 
   return (
     <>
@@ -25,7 +40,11 @@ const Form = ({
         <label htmlFor="endTime" className="label">End Time</label>
         <input id="endTime" className="timeInput" type="time" required value={endTime} onChange={e => setEndTime(e?.target?.value)} />
       </div>
-      <button onClick={() => onSend()}>
+      <button onClick={() => {
+        const time = parseTime();
+        chrome.runtime.sendMessage({command: Messages.START, time: time})
+        onSend()
+        }}>
         Rozpocznij
       </button>
     </>

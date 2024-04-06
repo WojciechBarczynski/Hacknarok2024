@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import background from '@assets/img/background.png';
+import { Messages } from '../../background';
 
 const Work = ({
   onSend
@@ -12,7 +13,7 @@ const Work = ({
   })();
 
   const [startTime, setStartTime] = useState(currentTime)
-  const [endTime, setEndTime] = useState()
+  const [endTime, setEndTime] = useState(undefined)
 
   return (
     <>
@@ -25,7 +26,10 @@ const Work = ({
         <label htmlFor="endTime" className="label">End Time</label>
         <input id="endTime" className="timeInput" type="time" required value={endTime} onChange={e => setEndTime(e?.target?.value)} />
       </div>
-      <button onClick={() => onSend()}>
+      <button onClick={() => {
+        chrome.runtime.sendMessage({command: Messages.END})
+        onSend()
+        }}>
         Zakończ
       </button>
     </>
