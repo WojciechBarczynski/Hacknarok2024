@@ -1,44 +1,64 @@
-import React from 'react';
-import logo from '@assets/img/logo.svg';
-import '@pages/newtab/Newtab.css';
-import '@pages/newtab/Newtab.scss';
-import useStorage from '@src/shared/hooks/useStorage';
-import exampleThemeStorage from '@src/shared/storages/exampleThemeStorage';
-import withSuspense from '@src/shared/hoc/withSuspense';
-import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
+import withErrorBoundary from '@root/src/shared/hoc/withErrorBoundary';
+import withSuspense from '@root/src/shared/hoc/withSuspense';
+import 'react-calendar-heatmap/dist/styles.css';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import CalendarHeatmap from 'react-calendar-heatmap';
+import './Newtab.css';
 
 const Newtab = () => {
-  const theme = useStorage(exampleThemeStorage);
+  const getRandomValuesArr = length => Array.from({ length }, () => Math.floor(Math.random() * 100) + 1);
+  const getRandomProfilePic = () => `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`;
+
+  const profilePic = getRandomProfilePic();
+  const activity = getRandomValuesArr(30);
+  const friend1Activity = getRandomValuesArr(30);
+  const friend2Activity = getRandomValuesArr(30);
+
+  const chartData = activity.map((value, index) => ({
+    date: new Date(new Date('2022-01-01').getTime() + index * 24 * 60 * 60 * 1000),
+    count: value,
+    friend1: friend1Activity[index],
+    friend2: friend2Activity[index],
+  }));
+
+  const heatmapData = activity.map((value, index) => ({
+    date: new Date(new Date('2022-01-01').getTime() + index * 24 * 60 * 60 * 1000),
+    count: value,
+  }));
 
   return (
-    <div
-      className="App"
-      style={{
-        backgroundColor: theme === 'light' ? '#ffffff' : '#000000',
-      }}>
-      <header className="App-header" style={{ color: theme === 'light' ? '#000' : '#fff' }}>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/pages/newtab/Newtab.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: theme === 'light' && '#0281dc', marginBottom: '10px' }}>
-          Learn React!
-        </a>
-        <h6>The color of this paragraph is defined using SASS.</h6>
-        <button
-          style={{
-            backgroundColor: theme === 'light' ? '#fff' : '#000',
-            color: theme === 'light' ? '#000' : '#fff',
-          }}
-          onClick={exampleThemeStorage.toggle}>
-          Toggle theme
-        </button>
-      </header>
+    <div className="App">
+      <div className="profile">
+        <img src={profilePic} alt="Profile Picture" className="profile-pic" />
+        <div className="profile-info">
+          <h1 className="profile-name">Bjorn Ironside</h1>
+          <p className="profile-bio">Viking</p>
+        </div>
+      </div>
+      <div className="data-container">
+        <div className="chart">
+          <LineChart width={800} height={200} data={chartData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="count" stroke="#8884d8" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="friend1" stroke="#82ca9d" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="friend2" stroke="#ffc658" activeDot={{ r: 8 }} />
+          </LineChart>
+        </div>
+        <div className="heatmap">
+          <CalendarHeatmap
+            startDate={new Date('2022-01-01')}
+            endDate={new Date('2022-01-31')}
+            values={heatmapData}
+            horizontal={false}
+            gutterSize={0.5}
+            showOutOfRangeDays={false}
+          />
+        </div>
+      </div>
     </div>
   );
 };
