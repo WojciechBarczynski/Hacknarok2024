@@ -41,9 +41,9 @@ const Form = ({
         <input id="endTime" className="timeInput" type="time" required value={endTime} onChange={e => setEndTime(e?.target?.value)} />
       </div>
       <button onClick={() => {
+        onSend()
         const time = parseTime();
         chrome.runtime.sendMessage({ command: Messages.START, time: time })
-        onSend()
       }}>
         Begin working
       </button>
