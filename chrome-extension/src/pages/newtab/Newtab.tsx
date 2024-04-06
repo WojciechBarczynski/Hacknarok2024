@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import withErrorBoundary from '@root/src/shared/hoc/withErrorBoundary';
 import withSuspense from '@root/src/shared/hoc/withSuspense';
 import 'react-calendar-heatmap/dist/styles.css';
@@ -6,6 +6,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'r
 import CalendarHeatmap from 'react-calendar-heatmap';
 import './Newtab.css';
 import background from '@assets/img/background.png';
+import { Messages } from "../background/helpers";
 
 const today = new Date();
 
@@ -18,8 +19,36 @@ const Newtab = () => {
   }));
 
   const [people, setPeople] = useState([])
+  const [percentage, setPercentage] = useState(0)
+  const [startAndEnd, SetStartAndEnd] = useState({start: "0:00", end: "0:00"})
 
   const getRandomProfilePic = () => `https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 100)}.jpg`;
+
+  const handleTime = useCallback((res) => {
+    console.log(res)
+    if (res.state === "done"){
+      return
+    }
+    else{
+      setPercentage(res.percentage)
+    }
+  }, [])
+
+  useEffect(() => {
+    chrome.runtime.sendMessage({command: Messages.GETTIME})
+      .then(handleTime)
+    
+    chrome.runtime.sendMessage({command: Messages.GETSTARTANDEND})
+    .then(res => SetStartAndEnd({start: res.start, end: res.end}))
+
+
+    const interval = setInterval(() => {
+      chrome.runtime.sendMessage({command: Messages.GETTIME})
+      .then(handleTime)
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [handleTime])
 
 
   const [profilePic, setProfilePic] = useState(getRandomProfilePic())
@@ -63,13 +92,13 @@ const Newtab = () => {
               <div className="profile-details">
                 <div>Welcome, <b>Blondyna</b><br /></div>
                 <div className="progress-bar-labels">
-                  <div>14:00</div>
-                  <div>16:35</div>
+                  <div>{startAndEnd.start}</div>
+                  <div>{startAndEnd.end}</div>
                 </div>
                 <div className="progress-bar-container">
                   <div
                     className="progress-bar"
-                    style={{ width: `30%` }}
+                    style={{ width: `${percentage}%` }}
                   ></div>
                 </div>
               </div>

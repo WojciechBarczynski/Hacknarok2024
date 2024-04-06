@@ -105,6 +105,8 @@ chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
         const minutes = remainingMinutes % 60
         const hours = Math.floor(remainingMinutes / 60)
 
+        console.log({ state: "ongoing", percentage, seconds, minutes, hours });
+
         return _sendResponse({ state: "ongoing", percentage, seconds, minutes, hours })
     }
 
