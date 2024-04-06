@@ -106,10 +106,13 @@ hr {
 
 .progress-bar {
   height: 100%;
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.7) 25%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0.7) 75%, rgba(255, 255, 255, 0.7));
-  background-size: 20px 20px;
-  transition: width 0.3s ease;
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.9) 10%, rgba(255, 255, 255, 0.7) 10%, rgba(255, 255, 255, 0.7) 20%, rgba(255, 255, 255, 0.9) 20%, rgba(255, 255, 255, 0.9) 30%, rgba(255, 255, 255, 0.7) 30%, rgba(255, 255, 255, 0.7) 40%, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0.9) 60%, rgba(255, 255, 255, 0.9) 70%, rgba(255, 255, 255, 0.7) 70%, rgba(255, 255, 255, 0.7) 80%, rgba(255, 255, 255, 0.9) 80%, rgba(255, 255, 255, 0.9) 90%, rgba(255, 255, 255, 0.7) 90%, rgba(255, 255, 255, 0.7));
+  background-size: 200% 200%;
+  /* Make segments smaller */
+  animation: progress-animation 3s linear infinite;
+  /* Animation for flowing effect */
 }
+
 
 .progress-bar-labels {
   color: white;
@@ -120,4 +123,16 @@ hr {
   font-size: 14px;
   opacity: 0.6;
   margin-top: -10px;
+}
+
+@keyframes progress-animation {
+  0% {
+    background-position: 0% 0%;
+    /* Start position */
+  }
+
+  100% {
+    background-position: 100% 100%;
+    /* End position */
+  }
 }

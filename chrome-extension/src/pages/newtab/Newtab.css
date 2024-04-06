@@ -1,57 +1,224 @@
+html,
+body,
+#app-container {
+    height: 100%;
+}
+
 .App {
-    padding: 20px;
+    background: url('../../assets/img/pageBackground.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .profile {
-    width: 200px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+    gap: 30px;
+    max-width: 80%;
+    margin: auto;
 }
 
 .profile-pic {
-    width: 150px;
-    height: 150px;
+    height: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic img {
+    width: auto;
+    height: 100%;
     border-radius: 50%;
     object-fit: cover;
+    box-shadow: 8px 8px 12px rgba(0, 0, 0, 1);
 }
 
-.profile-info {
-    margin-top: 10px;
+.container {
+    background: linear-gradient(to bottom right, #4d3b25, #291d1d, #100f0d);
+    box-shadow: 8px 8px 12px rgba(0, 0, 0, 1);
+    padding: 10px;
+    color: white;
+    width: 60%;
+    min-width: 700px;
+    margin: auto;
 }
 
-.data-container {
-    margin-top: 20px;
-}
-
-.chart,
-.heatmap {
-    margin-top: 10px;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
+@media screen and (max-width: 768px) {
+    .container {
+        min-width: 0;
+        width: calc(100% - 40px);
     }
 }
 
-.App-header {
-    min-height: 100vh;
+.recharts-wrapper,
+.recharts-legend-wrapper {
+    max-width: calc(100% - 25px);
+}
+
+.App-logo {
+    width: 100%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.7);
+    border: 1px solid black;
+}
+
+.imageBox {
+    position: relative;
+}
+
+.imageOverlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.profile-details {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 8px 8px 12px rgba(0, 0, 0, 1);
+    font-size: 18px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
+    gap: 20px;
+    flex-grow: 1;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 20px;
+    background-color: #4d3b25;
+    border: 1px solid #382916;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.7);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 10px;
+}
+
+.progress-bar {
+    height: 100%;
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.9) 10%, rgba(255, 255, 255, 0.7) 10%, rgba(255, 255, 255, 0.7) 20%, rgba(255, 255, 255, 0.9) 20%, rgba(255, 255, 255, 0.9) 30%, rgba(255, 255, 255, 0.7) 30%, rgba(255, 255, 255, 0.7) 40%, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0.9) 60%, rgba(255, 255, 255, 0.9) 70%, rgba(255, 255, 255, 0.7) 70%, rgba(255, 255, 255, 0.7) 80%, rgba(255, 255, 255, 0.9) 80%, rgba(255, 255, 255, 0.9) 90%, rgba(255, 255, 255, 0.7) 90%, rgba(255, 255, 255, 0.7));
+    background-size: 200% 200%;
+    /* Make segments smaller */
+    animation: progress-animation 3s linear infinite;
+    /* Animation for flowing effect */
+}
+
+
+.progress-bar-labels {
     color: white;
+    display: flex;
+    justify-content: space-between;
+    margin: 0px;
+    margin-bottom: -30px;
+    font-size: 14px;
+    opacity: 0.6;
+    margin-top: -10px;
 }
 
-.App-link {
-    color: #61dafb;
+@keyframes progress-animation {
+    0% {
+        background-position: 0% 0%;
+        /* Start position */
+    }
+
+    100% {
+        background-position: 100% 100%;
+        /* End position */
+    }
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
+/*
+ * react-calendar-heatmap styles
+ *
+ * All of the styles in this file are optional and configurable!
+ * The github and gitlab color scales are provided for reference.
+ */
 
-    to {
-        transform: rotate(360deg);
-    }
+.react-calendar-heatmap text {
+    font-size: 10px;
+    fill: #aaa;
+}
+
+.react-calendar-heatmap .react-calendar-heatmap-small-text {
+    font-size: 5px;
+}
+
+.react-calendar-heatmap rect:hover {
+    stroke: black;
+    stroke-width: 1px;
+}
+
+.react-calendar-heatmap .color-0 {
+    fill: #eeeeee;
+}
+
+.react-calendar-heatmap .color-1 {
+    fill: #d6e685;
+}
+
+.react-calendar-heatmap .color-2 {
+    fill: #8cc665;
+}
+
+.react-calendar-heatmap .color-3 {
+    fill: #44a340;
+}
+
+.react-calendar-heatmap .color-4 {
+    fill: #278924;
+}
+
+.switches {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.switches div {
+    font-size: 20px;
+    flex-grow: 1;
+    text-align: center;
+    background: linear-gradient(to bottom right, #5e472b, #291d1d);
+    border: 1px solid black;
+    box-shadow: 8px 8px 12px rgba(0, 0, 0, 1);
+}
+
+.switches div:hover {
+    cursor: pointer;
+    background: linear-gradient(to bottom right, #47341c, #110c0c);
+}
+
+table {
+    font-size: 21px;
+    width: 100%;
+}
+
+td,
+th {
+    text-align: left;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.profPic {
+    width: 100px;
+}
+
+.profPic img {
+    border-radius: 50%;
+    width: 50px;
+}
+
+tr {
+    border-bottom: 1px solid white;
 }
