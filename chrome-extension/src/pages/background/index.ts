@@ -107,6 +107,18 @@ chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
 
         return _sendResponse({state: "ongoing", percentage, seconds, minutes, hours})
     }
+
+    if (request.command === Messages.GETSTARTANDEND){
+        const startHours = sessionStartDate.getHours()
+        const startMinutes = sessionStartDate.getMinutes()
+        const endHours = sessionEndDate.getHours()
+        const endMinutes = sessionEndDate.getMinutes()
+
+        const startDate = `${startHours < 10 ? '0' : ''}${startHours}:${startMinutes < 10 ? '0' : ''}${startMinutes}`
+        const endDate = `${endHours < 10 ? '0' : ''}${endHours}:${endMinutes < 10 ? '0' : ''}${endMinutes}`
+        
+        return _sendResponse({start: startDate, end: endDate})
+    }
 })
 
 const sendInformation =  (url: string, operation: OperationType) => {

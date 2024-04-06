@@ -7,6 +7,7 @@ const Work = ({
 }) => {
   const [percentage, setPercentage] = useState(0)
   const [time, setTime] = useState({seconds: 0, minutes: 0, hours: 0})
+  const [startAndEnd, setStartAndEnd] = useState({start: "0:00", end: "0:45"})
 
   const handleTime = useCallback((res) => {
     if (res.state === "done"){
@@ -21,6 +22,10 @@ const Work = ({
   useEffect(() => {
     chrome.runtime.sendMessage({command: Messages.GETTIME})
       .then(handleTime)
+    
+    chrome.runtime.sendMessage({command: Messages.GETSTARTANDEND})
+    .then(res => setStartAndEnd({start: res.start, end: res.end}))
+
 
     const interval = setInterval(() => {
       chrome.runtime.sendMessage({command: Messages.GETTIME})
@@ -38,8 +43,8 @@ const Work = ({
       </div>
 
       <div className="progress-bar-labels">
-        <div>14:00</div>
-        <div>16:35</div>
+        <div>{startAndEnd.start}</div>
+        <div>{startAndEnd.end}</div>
       </div>
       <div className="progress-bar-container">
         <div

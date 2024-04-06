@@ -14,5 +14,6 @@ export enum Messages{
     START = "startListener",
     GETPOPUPSTATE = "getPopupState",
     SETPOPUPSTATE = "setPopupState",
-    GETTIME = "GetTime"
+    GETTIME = "GetTime",
+    GETSTARTANDEND = "GetStartAndEnd"
 }
