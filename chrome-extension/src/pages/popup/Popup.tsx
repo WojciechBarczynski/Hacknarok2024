@@ -8,7 +8,7 @@ import Form from './components/Form';
 import Work from './components/Work';
 
 const Popup = () => {
-  const [screen, setScreen] = useState("form")
+  const [screen, setScreen] = useState<string>("form")
 
   return (
     <div
@@ -25,7 +25,7 @@ const Popup = () => {
         }} />}
         <hr />
         <button>
-          <span class="material-symbols-outlined">
+          <span className="material-symbols-outlined">
             account_circle
           </span> Wyświetl Profil
         </button>

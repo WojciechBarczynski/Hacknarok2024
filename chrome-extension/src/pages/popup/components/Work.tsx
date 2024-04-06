@@ -17,14 +17,7 @@ const Work = ({
   return (
     <>
       <span><b>Focus</b>App</span>
-      <div className="inputWithLabel">
-        <label htmlFor="startTime" className="label">Start Time</label>
-        <input id="startTime" className="timeInput" type="time" required value={startTime} onChange={e => setStartTime(e?.target?.value)} />
-      </div>
-      <div className="inputWithLabel">
-        <label htmlFor="endTime" className="label">End Time</label>
-        <input id="endTime" className="timeInput" type="time" required value={endTime} onChange={e => setEndTime(e?.target?.value)} />
-      </div>
+      Progress Bar
       <button onClick={() => onSend()}>
         Zakończ
       </button>
