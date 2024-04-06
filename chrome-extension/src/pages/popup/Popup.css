@@ -8,7 +8,6 @@ body {
 body {
   margin-bottom: -12px;
   background: linear-gradient(to bottom right, #4d3b25, #291d1d, #100f0d);
-  /* Viking scheme background */
 }
 
 .App {
@@ -35,7 +34,6 @@ body {
 .timeInput {
   appearance: none;
   border: 1px solid #4d3b25;
-  /* Viking scheme border color */
   border-radius: 4px;
   padding: 8px;
   font-size: 16px;
@@ -47,7 +45,6 @@ body {
 .timeInput:focus {
   outline: none;
   border-color: #734a1e;
-  /* Viking scheme focus color */
   box-shadow: 0 0 4px rgba(115, 74, 30, 0.5);
 }
 
@@ -74,14 +71,12 @@ button {
 
 button:hover {
   background: linear-gradient(to bottom right, #59821f, #38570d);
-  /* Darker green-ish color on hover */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 button:focus {
   outline: none;
   box-shadow: 0 0 4px rgba(115, 122, 30, 0.5);
-  /* Viking scheme focus color */
 }
 
 .inputWithLabel {
@@ -95,4 +90,34 @@ hr {
   margin-bottom: -8px;
   margin-top: -8px;
   opacity: 0.4;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 20px;
+  background-color: #4d3b25;
+  border: 1px solid #382916;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  margin-top: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.7) 25%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0.7) 75%, rgba(255, 255, 255, 0.7));
+  background-size: 20px 20px;
+  transition: width 0.3s ease;
+}
+
+.progress-bar-labels {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  margin: 0px;
+  margin-bottom: -30px;
+  font-size: 14px;
+  opacity: 0.6;
+  margin-top: -10px;
 }

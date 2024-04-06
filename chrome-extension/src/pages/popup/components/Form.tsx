@@ -21,12 +21,12 @@ const Form = ({
     let hours = +tempEndTime[0] - (+tempStartTime[0])
     let minutes = +tempEndTime[1] - (+tempStartTime[1])
 
-    if (minutes < 0){
+    if (minutes < 0) {
       hours -= 1
       minutes += 60
     }
 
-    return hours*60*60 + minutes*60
+    return hours * 60 * 60 + minutes * 60
   }
 
   return (
@@ -42,10 +42,10 @@ const Form = ({
       </div>
       <button onClick={() => {
         const time = parseTime();
-        chrome.runtime.sendMessage({command: Messages.START, time: time})
+        chrome.runtime.sendMessage({ command: Messages.START, time: time })
         onSend()
-        }}>
-        Rozpocznij
+      }}>
+        Begin working
       </button>
     </>
   );

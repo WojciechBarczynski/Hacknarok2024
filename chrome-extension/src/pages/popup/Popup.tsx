@@ -26,7 +26,7 @@ const Popup = () => {
         <button>
           <span className="material-symbols-outlined">
             account_circle
-          </span> Wyświetl Profil
+          </span> Show Profile
         </button>
       </div>
     </div>
