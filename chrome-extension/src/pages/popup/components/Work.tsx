@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import background from '@assets/img/background.png';
-import { Messages } from '../../background';
 
 const Work = ({
   onSend
