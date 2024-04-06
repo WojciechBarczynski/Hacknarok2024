@@ -10,8 +10,9 @@ reloadOnUpdate('pages/background');
 reloadOnUpdate('pages/content/style.scss');
 
 let LAST_TABS = []
+let POPUP_STATE: "form" | "work" = "form"
 
-const onActivatedHandler =  (activeInfo) => {
+const onActivatedHandler = (activeInfo) => {
     chrome.tabs.get(activeInfo.tabId, function(tab) {
 
         chrome.tabs.query({}, (tabs) => {
@@ -22,6 +23,7 @@ const onActivatedHandler =  (activeInfo) => {
     });
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const onUpdatedHandler = (tabId, changeInfo, tab) => {
     if (changeInfo.url){
         chrome.tabs.query({}, (tabs) => {
@@ -33,6 +35,7 @@ const onUpdatedHandler = (tabId, changeInfo, tab) => {
 }
 
 const onRemoveHandler = () => {
+
     chrome.tabs.query({}, (tabs) => {
         const curTabsUrls = tabs.map(tab => tab.url)
 
@@ -46,8 +49,8 @@ const onRemoveHandler = () => {
     })
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
-
     if (request.command === Messages.START) {
         chrome.tabs.query({}, (tabs) => {
             LAST_TABS = tabs.map(tab => tab.url)
@@ -64,14 +67,20 @@ chrome.runtime.onMessage.addListener((request, _sender, _sendResponse) => {
             chrome.tabs.onRemoved.addListener(onRemoveHandler);
         }, 60000)
     }
+
+    if (request.command === Messages.GETPOPUPSTATE){
+        _sendResponse(POPUP_STATE);
+    }
+
+    if (request.command === Messages.SETPOPUPSTATE){
+        POPUP_STATE = request.state
+    }
 })
 
-const sendInformation = (url: string, operation: OperationType) => {
+const sendInformation =  (url: string, operation: OperationType) => {
     if (url === "chrome://newtab/" || url === ""){
         return
     }
-
-    console.log(`Sending: url = ${url} opeartion = ${operation}`)
 
     const body = {
         username: "johnny",
@@ -79,14 +88,20 @@ const sendInformation = (url: string, operation: OperationType) => {
         addres: url,
         operation: operation
     }
+    //"http://127.0.0.1:5000/db/add_record"
+    
+    console.log(`Sending: url = ${url} opeartion = ${operation}`)
 
-    // fetch("http://127.0.0.1:5000/db/add_record'", {
-    //     method: "POST",
-    //     headers: {
-    //         "content-type": "application/json"
-    //     },
-    //     body: JSON.stringify(body)
-    // })
+    fetch("https://01htspnak6ny62hs5gpyv2ka8300-0fd1b06d962b4163c9eb.requestinspector.com", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+    })
+    .then(console.log)
+
+    console.log("dupa")
 }
 
 enum OperationType{
