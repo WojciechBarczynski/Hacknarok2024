@@ -35,8 +35,8 @@ devDependencies:
     specifier: 14.2.2
     version: 14.2.2(react-dom@18.2.0)(react@18.2.0)
   '@types/chrome':
-    specifier: 0.0.263
-    version: 0.0.263
+    specifier: 0.0.265
+    version: 0.0.265
   '@types/node':
     specifier: 20.8.10
     version: 20.8.10
@@ -47,8 +47,8 @@ devDependencies:
     specifier: 18.2.18
     version: 18.2.18
   '@types/ws':
-    specifier: 8.5.8
-    version: 8.5.8
+    specifier: 8.5.10
+    version: 8.5.10
   '@typescript-eslint/eslint-plugin':
     specifier: 6.10.0
     version: 6.10.0(@typescript-eslint/parser@6.18.1)(eslint@8.56.0)(typescript@5.2.2)
@@ -59,8 +59,8 @@ devDependencies:
     specifier: 4.2.0
     version: 4.2.0(vite@5.0.12)
   chokidar:
-    specifier: 3.5.3
-    version: 3.5.3
+    specifier: 3.6.0
+    version: 3.6.0
   cross-env:
     specifier: 7.0.3
     version: 7.0.3
@@ -92,8 +92,8 @@ devDependencies:
     specifier: 11.1.1
     version: 11.1.1
   husky:
-    specifier: 8.0.3
-    version: 8.0.3
+    specifier: 9.0.11
+    version: 9.0.11
   jsdom:
     specifier: ^22.1.0
     version: 22.1.0
@@ -131,8 +131,8 @@ devDependencies:
     specifier: ^1.4.0
     version: 1.4.0(@types/node@20.8.10)(jsdom@22.1.0)(sass@1.72.0)
   ws:
-    specifier: 8.14.2
-    version: 8.14.2
+    specifier: 8.16.0
+    version: 8.16.0
 
 packages:
 
@@ -1140,8 +1140,8 @@ packages:
       '@babel/types': 7.23.0
     dev: true
 
-  /@types/chrome@0.0.263:
-    resolution: {integrity: sha512-As0vzv99ov3M6ZR7R6VzhMWFZXkPMrFrCEXXVrMN576Cm70fTkj7Df2CF+qEo170JepX50pd11cX6O4DSAtl2Q==}
+  /@types/chrome@0.0.265:
+    resolution: {integrity: sha512-wusn3sa1C0UOGs7B07EHgCin/G8TQQXWFJhI8F5uwJ0dNGYBj5/+JPmP/l+x+E2ntXXyX/eeN2Bj6Sk6dzMEtA==}
     dependencies:
       '@types/filesystem': 0.0.34
       '@types/har-format': 1.2.14
@@ -1233,8 +1233,8 @@ packages:
     resolution: {integrity: sha512-OxepLK9EuNEIPxWNME+C6WwbRAOOI2o2BaQEGzz5Lu2e4Z5eDnEo+/aVEDMIXywoJitJ7xWd641wrGLZdtwRyw==}
     dev: true
 
-  /@types/ws@8.5.8:
-    resolution: {integrity: sha512-flUksGIQCnJd6sZ1l5dqCEG/ksaoAg/eUwiLAGTJQcfgvZJKF++Ta4bJA6A5aPSJmsr+xlseHn4KLgVlNnvPTg==}
+  /@types/ws@8.5.10:
+    resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
     dependencies:
       '@types/node': 20.8.10
     dev: true
@@ -1969,8 +1969,8 @@ packages:
       get-func-name: 2.0.2
     dev: true
 
-  /chokidar@3.5.3:
-    resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
+  /chokidar@3.6.0:
+    resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
     dependencies:
       anymatch: 3.1.3
@@ -3270,9 +3270,9 @@ packages:
     engines: {node: '>=16.17.0'}
     dev: true
 
-  /husky@8.0.3:
-    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
-    engines: {node: '>=14'}
+  /husky@9.0.11:
+    resolution: {integrity: sha512-AB6lFlbwwyIqMdHYhwPe+kjOC3Oc5P3nThEoW/AaO2BX3vJDjWPFxYLxokUZOo6RNX20He3AaT8sESs9NJcmEw==}
+    engines: {node: '>=18'}
     hasBin: true
     dev: true
 
@@ -3640,7 +3640,7 @@ packages:
       whatwg-encoding: 2.0.0
       whatwg-mimetype: 3.0.0
       whatwg-url: 12.0.1
-      ws: 8.14.2
+      ws: 8.16.0
       xml-name-validator: 4.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -4737,7 +4737,7 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
-      chokidar: 3.5.3
+      chokidar: 3.6.0
       immutable: 4.3.4
       source-map-js: 1.0.2
     dev: true
@@ -5733,8 +5733,8 @@ packages:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
     dev: true
 
-  /ws@8.14.2:
-    resolution: {integrity: sha512-wEBG1ftX4jcglPxgFCMJmZ2PLtSbJ2Peg6TmpJFTbe9GZYOQCDPdMYu/Tm0/bGZkw8paZnJY45J4K2PZrLYq8g==}
+  /ws@8.16.0:
+    resolution: {integrity: sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
