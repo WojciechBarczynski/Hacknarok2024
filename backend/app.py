@@ -3,8 +3,11 @@ import logging
 import datetime
 import ray
 import requests
+import enum
 
 from flask import Flask, request, jsonify
+from random import randint
+from copy import deepcopy
 
 app = Flask(__name__)
 
@@ -15,12 +18,6 @@ host = 'localhost'
 
 conn = psycopg2.connect(dbname=dbname, user=user, password=password, host=host)
 
-from flask import Flask, jsonify, request
-import requests
-import datetime
-import ray
-import enum
-
 
 class Operation(enum.Enum):
     UrlChange = 1,
@@ -28,50 +25,75 @@ class Operation(enum.Enum):
     Remove = 3,
 
 
-class record:
-    def __init__(self, time, url, operation):
-        self.time = time
-        self.url = url
-        self.operation = operation
-
-
-app = Flask(__name__)
+@app.route('/mock/get_scores', methods=['GET'])
+def mockup():
+    output = {
+        'areczek': [randint(0, 40) for _ in range(365)],
+        'womziak': [randint(0, 10) for _ in range(365)],
+        'wojtus': [randint(1, 3) * 33 for _ in range(365)],
+        'rusiek': [randint(50, 100) for _ in range(365)]
+    }
+    return jsonify(output), 200
 
 
 @ray.remote
 def score(user):
-    import random
-    return [random.randint(1, 100) for _ in range(365)]
-
-
-@app.route('/get_scores', methods=['GET'])
-def get_scores():
-    api_url = "http://54.210.118.222:80/api/communication/get_records"
-    response = requests.get(api_url)
+    output = []
+    users_update = []
+    for t, url, op in user:
+        new_t = datetime.datetime.strptime(t, "%Y-%m-%dT%H:%M:%S.%f")
+        new_t = new_t.strftime("%Y-%m-%d")
+        users_update.append((new_t, url, op))
+    user = users_update
     
+    now = datetime.datetime.now()
+    current_date = now.strftime("%Y-%m-%d")
+    for i in range(365):
+        hist_date = now - datetime.timedelta(days=i)
+        hist_date = hist_date.strftime("%Y-%m-%d")
+        user_cp = [(date, url, op) for date, url, op in user if date == hist_date]
+        if len(user_cp) == 0:
+            output.append(0)
+            continue
+        ok, total = 0, 0
+        for _, url, _ in user_cp:
+            url = url.lower()
+            total += 1
+            if (
+                url.find('facebook') == -1 and
+                url.find('youtube') == -1 and
+                url.find('twitter') == -1 and
+                url.find('instagram') == -1 and 
+                url.find('tiktok') == -1
+            ):
+                ok += 1
+        output.append(int(100 * ok / total))
+    
+    return output
+
+
+
+@app.route('/api/get_scores', methods=['GET'])
+def get_scores():
+    data = get_records().json
     users = {}
 
-    if response.status_code == 200:
-        data = response.json()
-        for _, user, t, url, op in data['records']:
-            if user not in users:
-                users[user] = []
-            users[user].append(record(t, url, op))
-            
-        scores = []
-        for user in users:
-            scores.append(score.remote(user))
-        scores = ray.get(scores)
+    for _, user, t, url, op in data['records']:
+        if user not in users:
+            users[user] = []
+        users[user].append((t, url, op))
 
-        output = {}
-        for i, user in enumerate(users):
-            output[user] = scores[i]
+    scores = []
+    for key, value in users.items():
+        scores.append(score.remote(value))
+    scores = ray.get(scores)
 
-        print(output)
+    output = {}
+    for dict_it, u_score in zip(users.items(), scores):
+        user, _ = dict_it
+        output[user] = u_score
 
-        return jsonify(output), 200
-    else:
-        return jsonify({"error": "Nie"}), response.status_code
+    return jsonify(output), 200
 
 
 @app.route('/api/communication/get_users', methods=['GET'])
