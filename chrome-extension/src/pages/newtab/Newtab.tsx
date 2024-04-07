@@ -20,7 +20,7 @@ const Newtab = () => {
 
   const [people, setPeople] = useState([])
   const [percentage, setPercentage] = useState(0)
-  const [startAndEnd, SetStartAndEnd] = useState({start: "0:00", end: "0:00"})
+  const [startAndEnd, SetStartAndEnd] = useState({ start: "0:00", end: "0:00" })
 
   const getRandomProfilePic = () => `https://i.postimg.cc/Dz0ngZ9r/berserker-norse-viking-square-canvas-art-canvas-wall-art-2-8-x-8-579559-1200x1200.webp`;
 
@@ -140,7 +140,7 @@ const Newtab = () => {
                   labelStyle={{ color: '#e0e0e0' }}
                   itemStyle={{ color: '#e0e0e0' }} />
                 <Legend wrapperStyle={{ color: '#e0e0e0' }} />
-                <Line type="monotone" dataKey="count" stroke="#ff0066" activeDot={{ r: 8, fill: '#ff0066' }} />
+                <Line type="monotone" dataKey="Productivity points" stroke="#ff0066" activeDot={{ r: 8, fill: '#ff0066' }} />
               </LineChart>
             </div>
           </div>
