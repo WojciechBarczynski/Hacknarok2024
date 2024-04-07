@@ -140,7 +140,7 @@ const Newtab = () => {
                   labelStyle={{ color: '#e0e0e0' }}
                   itemStyle={{ color: '#e0e0e0' }} />
                 <Legend wrapperStyle={{ color: '#e0e0e0' }} />
-                <Line type="monotone" dataKey="Productivity points" stroke="#ff0066" activeDot={{ r: 8, fill: '#ff0066' }} />
+                <Line type="monotone" dataKey="count" stroke="#ff0066" activeDot={{ r: 8, fill: '#ff0066' }} />
               </LineChart>
             </div>
           </div>
